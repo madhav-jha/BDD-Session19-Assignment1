@@ -1,0 +1,25 @@
+Hbase table
+
+create 'employee','personaldetails','deptdetails'
+
+put 'employee','eid01','personaldetails:fname','Brundesh'
+put 'employee','eid01','personaldetails:Lname','R'
+put 'employee','eid01','personaldetails:salary','10000'
+put 'employee','eid01','deptdetails:name','R&D'
+put 'employee','eid01','deptdetails:location','Banglore'
+
+put 'employee','eid02','personaldetails:fname','Abhay'
+put 'employee','eid02','personaldetails:Lname','Kumar'
+put 'employee','eid02','personaldetails:salary','100000'
+
+
+Hive table
+
+create external table employee_hbase(eid string, f_name string, s_name string, salary int)
+stored by 'org.apache.hadoop.hive.hbase.hbasestoragehandler'
+with serdeproperties ("hbase.columns.mapping"=":key,personaldetails:fname,personaldetails:
+lname,personaldetails:salary")
+tblproperties("hbase.table.name"="employee");
+
+select * from employee_hbase;
+
